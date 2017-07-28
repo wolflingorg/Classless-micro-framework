@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\core;
+namespace blog\functions;
 
 /**
  * Returns current route name and controller
@@ -9,7 +9,8 @@ namespace blog\core;
  *
  * @return array
  */
-function getCurrentRoute(array $routes = []) {
+function getCurrentRoute(array $routes = [])
+{
     $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
     $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 

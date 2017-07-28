@@ -1,22 +1,19 @@
 <?php
-include '../core/routing.php';
+include '../app/app.php';
+include '../functions/routing.php';
+include '../functions/templating.php';
 
-use blog\core;
-
-$app = [];
-
-$routes = require '../app/routes.php';
-$app['config'] = require '../app/config.php';
+use blog\functions;
 
 // Trying to detect current route
-if (!($route = core\getCurrentRoute($routes))) {
+if (!($route = functions\getCurrentRoute($app['routes']))) {
     header("HTTP/1.0 404 Not Found", true, 404);
     exit();
 }
 $app['route'] = $route;
 
 // Trying to include needed controller
-$path =  '../src/' . $app['route']['controller'];
+$path = '../src/' . $app['route']['controller'];
 if (!is_file($path)) {
     header("500 Internal Server Error", true, 500);
     exit();

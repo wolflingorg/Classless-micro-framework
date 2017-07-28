@@ -1,4 +1,10 @@
 <?php
 return [
-    'name' => 'Application name'
+    'db' => [
+        'host' => 'localhost',
+        'dbname' => 'book_store',
+        'username' => 'root',
+        'passwd' => ''
+    ],
+    'name' => 'Application name',
 ];
