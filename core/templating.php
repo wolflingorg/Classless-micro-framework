@@ -10,7 +10,7 @@ namespace blog\core;
  *
  * @return null|string
  */
-function renderView($includes, $data = null)
+function renderView(array $includes, $data = null)
 {
     global $app;
 
@@ -20,34 +20,24 @@ function renderView($includes, $data = null)
 
     $content = null;
 
+    $includes = array_reverse($includes);
+
     if (is_array($data)) {
         extract($data);
     }
 
-    if (is_array($includes)) {
-        $includes = array_reverse($includes);
-
-        foreach ($includes as $include) {
-            if (!ob_get_level()) {
-                ob_start();
-            }
-
-            include_once $app['kernel.view_dir'] . DIRECTORY_SEPARATOR . $include;
-
-            $content = ob_get_contents();
-
-            if (ob_get_level()) {
-                ob_end_clean();
-            }
+    foreach ($includes as $include) {
+        if (!ob_get_level()) {
+            ob_start();
         }
-    } else {
-        ob_start();
 
-        include_once $includes;
+        include_once $app['kernel.view_dir'] . DIRECTORY_SEPARATOR . $include;
 
         $content = ob_get_contents();
 
-        ob_end_clean();
+        if (ob_get_level()) {
+            ob_end_clean();
+        }
     }
 
     return $content;

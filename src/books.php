@@ -1,7 +1,8 @@
 <?php
 namespace blog\src\books;
 
-use function blog\core\renderView;
+use blog\core;
+use blog\exceptions\HttpNotFoundException;
 
 $app['books'] = [
     [
@@ -44,7 +45,7 @@ $app['books'] = [
 function index() {
     global $app;
 
-    return renderView(['default_layout.php', 'books/index.php'], [
+    return core\renderView(['default_layout.php', 'books/index.php'], [
         'books' => $app['books']
     ]);
 }
@@ -53,10 +54,10 @@ function bookById($id) {
     global $app;
 
     if (!isset($app['books'][$id])) {
-        return renderView('404.php');
+        throw new HttpNotFoundException();
     }
 
-    return renderView(['default_layout.php', 'books/book_by_id.php'], [
+    return core\renderView(['default_layout.php', 'books/book_by_id.php'], [
         'book' => $app['books'][$id]
     ]);
 }

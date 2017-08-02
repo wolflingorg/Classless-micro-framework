@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\core;
+use blog\exceptions\HttpNotFoundException;
 
 /**
  * Returns current route name and controller
@@ -8,6 +9,7 @@ namespace blog\core;
  * @param array $routes
  *
  * @return array
+ * @throws HttpNotFoundException
  */
 function getCurrentRoute(array $routes = [])
 {
@@ -19,7 +21,7 @@ function getCurrentRoute(array $routes = [])
             continue;
         }
 
-        $routePattern = isset($route['path']) ? '#^' . addslashes($route['path']) . '$#' : '#\/#';
+        $routePattern = isset($route['path']) ? '#^' . $route['path'] . '$#' : '#/#';
         $routeMethods = isset($route['methods']) ? $route['methods'] : ['GET'];
 
         if (preg_match($routePattern, $path) && in_array($method, $routeMethods)) {
@@ -31,5 +33,5 @@ function getCurrentRoute(array $routes = [])
         }
     }
 
-    return [];
+    throw new HttpNotFoundException();
 }
