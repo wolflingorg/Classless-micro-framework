@@ -11,8 +11,12 @@ header("HTTP/1.0 404 Not Found", true, 404);
     <title>404 not found</title>
 </head>
 <body>
-    <div id="content">
-        Page not found
+    <div class="container">
+        <div class="starter-template text-center">
+            <h1>404 error</h1>
+            <p class="lead">Page not found</p>
+            <p><?= $message ?></p>
+        </div>
     </div>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

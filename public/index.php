@@ -17,6 +17,9 @@ try {
     // Trying to include needed controller and function
     echo core\renderController($app['route']['controller'], $app['route']['function']);
 } catch (HttpNotFoundException $e) {
-    echo core\renderController('err404.php', 'blog\\src\\err404\\index');
+    echo core\renderController('http_404.php', 'blog\\src\\http_404\\index', [$e->getMessage()]);
+    exit();
+} catch (\Exception $e) {
+    echo core\renderController('http_500.php', 'blog\\src\\http_500\\index', [$e->getMessage()]);
     exit();
 }
