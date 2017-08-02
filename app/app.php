@@ -1,25 +1,14 @@
 <?php
 // Configuring
 $app = [
-    'kernel.root_dir' => dirname(dirname(__FILE__)),
-    'kernel.view_dir' => dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views'
+    'kernel.root_dir' => dirname(dirname(__FILE__))
 ];
-$app['config'] = require '../app/config.php';
-$app['routes'] = require '../app/routes.php';
+$app = array_merge($app, [
+    'kernel.view_dir' => $app['kernel.root_dir'] . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views',
+    'kernel.src_dir' => $app['kernel.root_dir'] . DIRECTORY_SEPARATOR . 'src',
+    'kernel.app_dir' => $app['kernel.root_dir'] . DIRECTORY_SEPARATOR . 'app',
+    'kernel.services_dir' => $app['kernel.root_dir'] . DIRECTORY_SEPARATOR . 'services'
+]);
 
-// DB
-$app['db'] = function ($app) {
-    try {
-        $DBH = new PDO(
-            "mysql:host={$app['config']['db']['host']};dbname={$app['config']['db']['dbname']}",
-            $app['config']['db']['username'],
-            $app['config']['db']['passwd']
-        );
-        $DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        header("500 Internal Server Error", true, 500);
-        exit($e->getMessage());
-    }
-
-    return $DBH;
-};
+$app['config'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'config.php';
+$app['routes'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'routes.php';

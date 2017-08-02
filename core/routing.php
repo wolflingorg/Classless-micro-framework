@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\functions;
+namespace blog\core;
 
 /**
  * Returns current route name and controller

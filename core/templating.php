@@ -1,12 +1,14 @@
 <?php
 
-namespace blog\functions;
+namespace blog\core;
 
 /**
  * Includes all files
  *
  * @param $includes
  * @param null $data
+ *
+ * @return null|string
  */
 function renderView($includes, $data = null)
 {
@@ -17,7 +19,6 @@ function renderView($includes, $data = null)
     }
 
     $content = null;
-    $html = null;
 
     if (is_array($data)) {
         extract($data);
@@ -25,22 +26,29 @@ function renderView($includes, $data = null)
 
     if (is_array($includes)) {
         $includes = array_reverse($includes);
-        $page = array_pop($includes);
 
         foreach ($includes as $include) {
-            ob_start();
+            if (!ob_get_level()) {
+                ob_start();
+            }
+
             include_once $app['kernel.view_dir'] . DIRECTORY_SEPARATOR . $include;
+
             $content = ob_get_contents();
-            ob_end_clean();
+
+            if (ob_get_level()) {
+                ob_end_clean();
+            }
         }
-
-        ob_start();
-        include $app['kernel.view_dir'] . DIRECTORY_SEPARATOR . $page;
-        $html = ob_get_contents();
-        ob_end_clean();
-
-        echo $html;
     } else {
-        include $includes;
+        ob_start();
+
+        include_once $includes;
+
+        $content = ob_get_contents();
+
+        ob_end_clean();
     }
+
+    return $content;
 }

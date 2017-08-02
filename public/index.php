@@ -1,30 +1,19 @@
 <?php
 include '../app/app.php';
-include '../functions/routing.php';
-include '../functions/templating.php';
+include '../core/routing.php';
+include '../core/templating.php';
+include '../core/controllers.php';
 
-use blog\functions;
+use blog\core;
+
+global $app;
 
 // Trying to detect current route
-if (!($route = functions\getCurrentRoute($app['routes']))) {
-    header("HTTP/1.0 404 Not Found", true, 404);
+if (!($route = core\getCurrentRoute($app['routes']))) {
+    core\renderView('404.php');
     exit();
 }
 $app['route'] = $route;
 
-// Trying to include needed controller
-$path = '../src/' . $app['route']['controller'];
-if (!is_file($path)) {
-    header("500 Internal Server Error", true, 500);
-    exit();
-}
-require $path;
-
-// Trying to call needed function
-if (!empty($app['route']['function'])) {
-    if (!function_exists($app['route']['function'])) {
-        header("500 Internal Server Error", true, 500);
-        exit();
-    }
-    call_user_func($app['route']['function'], $app);
-}
+// Trying to include needed controller and function
+echo core\renderController($app['route']['controller'], $app['route']['function']);

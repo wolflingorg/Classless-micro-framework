@@ -6,8 +6,20 @@
 return [
     'main_page' => [
         'path' => '/',
-        'controller' => 'main_page.php',
-        'function' => 'blog\\src\\index',
+        'controller' => 'main.php',
+        'function' => 'blog\\src\\main\\index',
         'methods' => ['GET']
-    ]
+    ],
+    'books' => [
+        'path' => '/books',
+        'controller' => 'books.php',
+        'function' => 'blog\\src\\books\\index',
+        'methods' => ['GET']
+    ],
+    'book_by_id' => [
+        'path' => '/books/{id}',
+        'controller' => 'books.php',
+        'function' => 'blog\\src\\books\\bookById',
+        'methods' => ['GET']
+    ],
 ];
