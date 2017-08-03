@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\core;
+namespace app\core;
 
 /**
  * Includes all files

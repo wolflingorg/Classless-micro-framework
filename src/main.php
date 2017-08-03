@@ -1,8 +1,8 @@
 <?php
 
-namespace blog\src\main;
+namespace app\src\main;
 
-use function blog\core\renderView;
+use function app\core\renderView;
 
 function index()
 {

@@ -1,8 +1,8 @@
 <?php
-namespace blog\src\books;
+namespace app\src\books;
 
-use blog\core;
-use blog\exceptions\HttpNotFoundException;
+use app\core;
+use app\exceptions\HttpNotFoundException;
 
 $app['books'] = [
     [
@@ -50,7 +50,7 @@ function index() {
     ]);
 }
 
-function bookById($name, $id) {
+function bookById($id) {
     global $app;
 
     if (!isset($app['books'][$id])) {

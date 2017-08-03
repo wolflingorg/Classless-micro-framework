@@ -7,22 +7,22 @@ return [
     'main_page' => [
         'path' => '/',
         'controller' => 'main.php',
-        'function' => 'blog\\src\\main\\index',
+        'function' => 'app\\src\\main\\index',
         'methods' => ['GET']
     ],
     'books' => [
         'path' => '/books',
         'controller' => 'books.php',
-        'function' => 'blog\\src\\books\\index',
+        'function' => 'app\\src\\books\\index',
         'methods' => ['GET']
     ],
     'book_by_id' => [
-        'path' => '/books/{name}/{id}',
+        'path' => '/books/{id}',
         'requirements' => [
             'id' => '\d+'
         ],
         'controller' => 'books.php',
-        'function' => 'blog\\src\\books\\bookById',
+        'function' => 'app\\src\\books\\bookById',
         'methods' => ['GET']
     ],
 ];

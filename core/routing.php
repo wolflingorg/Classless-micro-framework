@@ -1,8 +1,8 @@
 <?php
 
-namespace blog\core;
+namespace app\core;
 
-use blog\exceptions\HttpNotFoundException;
+use app\exceptions\HttpNotFoundException;
 
 /**
  * Returns current route name and controller
@@ -14,6 +14,10 @@ function getCurrentRoute()
 {
     global $app;
 
+    if (!isset($app['routes'])) {
+        throw new \InvalidArgumentException('Can\'t find routes');
+    }
+
     $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
     $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 
@@ -22,14 +26,7 @@ function getCurrentRoute()
             continue;
         }
 
-        $routeRequirements = !isset($route['requirements']) || !is_array($route['requirements']) ? [] : $route['requirements'];
-        $routeRequirements = array_merge($routeRequirements, ['[^}]+' => '.*?']);
-        $routePattern = isset($route['path']) ? '#^' . $route['path'] . '$#' : '#/#';
-        $routePattern = preg_replace(
-            array_map(function($value) {return '#{' . $value . '}#';}, array_keys($routeRequirements)),
-            array_map(function($value) {return '(' . $value . ')';}, array_values($routeRequirements)),
-            $routePattern
-        );
+        $routePattern = buildRoutePattern($route);
         $routeMethods = isset($route['methods']) ? $route['methods'] : ['GET'];
 
         if (preg_match($routePattern, $path, $matches) && in_array($method, $routeMethods)) {
@@ -43,6 +40,25 @@ function getCurrentRoute()
     }
 
     throw new HttpNotFoundException();
+}
+
+/**
+ * Builds pattern for routing
+ *
+ * @param $route
+ *
+ * @return mixed
+ */
+function buildRoutePattern($route) {
+    $routeRequirements = !isset($route['requirements']) || !is_array($route['requirements']) ? [] : $route['requirements'];
+    $routeRequirements = array_merge($routeRequirements, ['[^}]+' => '.*?']);
+    $routePattern = isset($route['path']) ? '#^' . $route['path'] . '$#' : '#/#';
+
+    return preg_replace(
+        array_map(function($value) {return '#{' . $value . '}#';}, array_keys($routeRequirements)),
+        array_map(function($value) {return '(' . $value . ')';}, array_values($routeRequirements)),
+        $routePattern
+    );
 }
 
 /**

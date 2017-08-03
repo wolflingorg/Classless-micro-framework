@@ -1,7 +1,7 @@
 <?php
-namespace blog\core;
+namespace app\core;
 
-use blog\exceptions\RuntimeException;
+use app\exceptions\RuntimeException;
 
 function renderController($controller, $function = null, $params = []) {
     global $app;
