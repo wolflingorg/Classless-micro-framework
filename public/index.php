@@ -4,6 +4,7 @@ include '../core/routing.php';
 include '../core/templating.php';
 include '../core/controllers.php';
 include '../exceptions/HttpNotFoundException.php';
+include '../exceptions/RuntimeException.php';
 
 use app\core;
 use app\exceptions\HttpNotFoundException;
