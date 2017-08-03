@@ -50,7 +50,7 @@ function index() {
     ]);
 }
 
-function bookById($id) {
+function bookById($name, $id) {
     global $app;
 
     if (!isset($app['books'][$id])) {

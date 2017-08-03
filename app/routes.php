@@ -17,7 +17,10 @@ return [
         'methods' => ['GET']
     ],
     'book_by_id' => [
-        'path' => '/books/(\d+)',
+        'path' => '/books/{name}/{id}',
+        'requirements' => [
+            'id' => '\d+'
+        ],
         'controller' => 'books.php',
         'function' => 'blog\\src\\books\\bookById',
         'methods' => ['GET']

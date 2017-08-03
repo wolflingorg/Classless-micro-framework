@@ -12,10 +12,10 @@ global $app;
 
 try {
     // Trying to detect current route
-    $app['route'] = core\getCurrentRoute($app['routes']);
+    $app['route'] = core\getCurrentRoute();
 
     // Trying to include needed controller and function
-    echo core\renderController($app['route']['controller'], $app['route']['function']);
+    echo core\renderController($app['route']['controller'], $app['route']['function'], $app['route']['params']);
 } catch (HttpNotFoundException $e) {
     echo core\renderController('http_404.php', 'blog\\src\\http_404\\index', [$e->getMessage()]);
     exit();
