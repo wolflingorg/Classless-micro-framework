@@ -18,22 +18,22 @@ function getCurrentRoute()
         throw new \InvalidArgumentException('Can\'t find routes');
     }
 
-    $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
-    $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+    $path = $_SERVER['PATH_INFO'] ?? '/';
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
     foreach ($app['routes'] as $name => $route) {
-        if (empty($route['controller'])) {
+        if (empty($route['controller']) || empty($route['function'])) {
             continue;
         }
 
         $routePattern = buildRoutePattern($route);
-        $routeMethods = isset($route['methods']) ? $route['methods'] : ['GET'];
+        $routeMethods = $route['methods'] ?? ['GET'];
 
         if (preg_match($routePattern, $path, $matches) && in_array($method, $routeMethods)) {
             return [
                 'name' => $name,
                 'controller' => $route['controller'],
-                'function' => isset($route['function']) ? $route['function'] : null,
+                'function' => $route['function'],
                 'params' => !empty($matches) ? array_slice($matches, 1) : [],
             ];
         }
@@ -50,13 +50,14 @@ function getCurrentRoute()
  * @return mixed
  */
 function buildRoutePattern($route) {
-    $routeRequirements = !isset($route['requirements']) || !is_array($route['requirements']) ? [] : $route['requirements'];
-    $routeRequirements = array_merge($routeRequirements, ['[^}]+' => '.*?']);
+    $routeRequirements = isset($route['requirements']) ? (array)$route['requirements'] : [];
     $routePattern = isset($route['path']) ? '#^' . $route['path'] . '$#' : '#/#';
 
-    return preg_replace(
-        array_map(function($value) {return '#{' . $value . '}#';}, array_keys($routeRequirements)),
-        array_map(function($value) {return '(' . $value . ')';}, array_values($routeRequirements)),
+    return preg_replace_callback(
+        '/{([^}]+)}/',
+        function ($matches) use ($routeRequirements) {
+            return isset($routeRequirements[$matches[1]]) ? '(' . $routeRequirements[$matches[1]] . ')' : '(.*?)';
+        },
         $routePattern
     );
 }
@@ -78,5 +79,22 @@ function createUrl($name, $params = [])
         throw new \InvalidArgumentException(sprintf("Can't find route %s", $name));
     }
 
-    return '/trololo.html';
+    $path = preg_replace_callback(
+        '/{([^}]+)}/',
+        function ($matches) use ($params) {
+            if (!isset($params[$matches[1]])) {
+                throw new \InvalidArgumentException(sprintf("Parameter %s is required", $matches[1]));
+            }
+
+            return $params[$matches[1]];
+        },
+        $app['routes'][$name]['path']
+    );
+
+    $routePattern = buildRoutePattern($app['routes'][$name]);
+    if(!preg_match($routePattern, $path)) {
+        throw new \InvalidArgumentException("Invalid parameters. Please, check the requirements section");
+    }
+
+    return $path;
 }

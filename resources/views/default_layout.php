@@ -15,7 +15,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><?= $app['config']['name'] ?></a>
+            <a class="navbar-brand" href="<?= \app\core\createUrl('main_page') ?>"><?= $app['config']['name'] ?></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right">
