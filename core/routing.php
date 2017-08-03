@@ -5,7 +5,7 @@ namespace app\core;
 use app\exceptions\HttpNotFoundException;
 
 /**
- * Returns current route name and controller
+ * Returns current route name and file
  *
  * @return array
  * @throws HttpNotFoundException
@@ -22,7 +22,7 @@ function getCurrentRoute()
     $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
     foreach ($app['routes'] as $name => $route) {
-        if (empty($route['controller']) || empty($route['function'])) {
+        if (empty($route['file']) || empty($route['function'])) {
             continue;
         }
 
@@ -32,7 +32,7 @@ function getCurrentRoute()
         if (preg_match($routePattern, $path, $matches) && in_array($method, $routeMethods)) {
             return [
                 'name' => $name,
-                'controller' => $route['controller'],
+                'file' => $route['file'],
                 'function' => $route['function'],
                 'params' => !empty($matches) ? array_slice($matches, 1) : [],
             ];

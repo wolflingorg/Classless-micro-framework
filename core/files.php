@@ -3,14 +3,14 @@ namespace app\core;
 
 use app\exceptions\RuntimeException;
 
-function renderController($controller, $function = null, $params = []) {
+function renderFile($file, $function = null, $params = []) {
     global $app;
 
-    // Trying to include needed controller
-    $path = $app['kernel.src_dir'] . DIRECTORY_SEPARATOR . $controller;
+    // Trying to include needed file
+    $path = $app['kernel.src_dir'] . DIRECTORY_SEPARATOR . $file;
 
     if (!is_file($path) || empty($function)) {
-        throw new RuntimeException(sprintf("Couldn't find controller %s", $path));
+        throw new RuntimeException(sprintf("Couldn't find file %s", $path));
     }
 
     require $path;
