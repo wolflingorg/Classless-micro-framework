@@ -15,7 +15,10 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<?= \app\core\createUrl('main_page') ?>"><?= $app['config']['name'] ?></a>
+            <a class="navbar-brand" href="<?= \app\core\createUrl('main_page') ?>">
+                <span class="glyphicon glyphicon-book"></span>
+                <?= $app['config']['name'] ?>
+            </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right">
@@ -32,6 +35,14 @@
 </nav>
 
 <div class="container"><?= $content ?></div>
+
+<hr>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">© <?= date_format(date_create(),'Y') ?> Company, Inc.</p>
+    </div>
+</footer>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"

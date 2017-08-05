@@ -10,5 +10,6 @@ $app = array_merge($app, [
     'kernel.services_dir' => $app['kernel.root_dir'] . DIRECTORY_SEPARATOR . 'services'
 ]);
 
-$app['config'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'config.php';
-$app['routes'] = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'routes.php';
+$app['config']  = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'config.php';
+$app['routes']  = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'routes.php';
+$app['user']    = require $app['kernel.app_dir'] . DIRECTORY_SEPARATOR . 'user.php';

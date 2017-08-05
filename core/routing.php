@@ -10,8 +10,7 @@ use app\exceptions\HttpNotFoundException;
  * @return array
  * @throws HttpNotFoundException
  */
-function getCurrentRoute()
-{
+function getCurrentRoute() {
     global $app;
 
     if (!isset($app['routes'])) {

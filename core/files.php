@@ -13,7 +13,7 @@ function renderFile($file, $function = null, $params = []) {
         throw new RuntimeException(sprintf("Couldn't find file %s", $path));
     }
 
-    require $path;
+    require_once $path;
 
     // Trying to call needed function
     if (!function_exists($function)) {
