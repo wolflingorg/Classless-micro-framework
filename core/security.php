@@ -7,11 +7,13 @@ namespace app\core;
  * @param $user
  */
 function persistUser($user) {
-    $_SESSION['user'] = $user;
-    $_SESSION['user_verification_data'] = [
+    session_regenerate_id();
+
+    setUserData('user', $user);
+    setUserData('security', [
         'ip' => getUserIp(),
         'user-agent' => getUserAgent(),
-    ];
+    ]);
 }
 
 /**
@@ -20,14 +22,11 @@ function persistUser($user) {
  * @return null|array
  */
 function restoreUser() {
-    if (!isset($_SESSION['user']) || !isset($_SESSION['user_verification_data'])) {
+    if (!($user = getUserData('user')) || !($security = getUserData('security'))) {
         return null;
     }
 
-    $user = $_SESSION['user'];
-    $verificationData = $_SESSION['user_verification_data'];
-
-    if ($verificationData['ip'] != getUserIp() || $verificationData['user-agent'] != getUserAgent()) {
+    if ($security['ip'] != getUserIp() || $security['user-agent'] != getUserAgent()) {
         return null;
     }
 
@@ -38,8 +37,8 @@ function restoreUser() {
  * Deletes user information from the session
  */
 function clearUser() {
-    unset($_SESSION['user']);
-    unset($_SESSION['user_verification_data']);
+    clearUserDara('user');
+    clearUserDara('security');
 }
 
 /**

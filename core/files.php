@@ -3,6 +3,16 @@ namespace app\core;
 
 use app\exceptions\RuntimeException;
 
+/**
+ * Includes file and runs function with parameters
+ *
+ * @param $file
+ * @param null $function
+ * @param array $params
+ *
+ * @return mixed
+ * @throws RuntimeException
+ */
 function renderFile($file, $function = null, $params = []) {
     global $app;
 

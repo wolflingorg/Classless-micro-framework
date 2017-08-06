@@ -43,7 +43,15 @@
     </div>
 </nav>
 
-<div class="container"><?= $content ?></div>
+<div class="container">
+    <?php foreach (\app\core\getFlashes('error') as $message): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $message ?>
+        </div>
+    <?php endforeach; ?>
+
+    <?= $content ?>
+</div>
 
 <hr>
 
