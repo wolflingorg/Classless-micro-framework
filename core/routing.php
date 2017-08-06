@@ -70,7 +70,7 @@ function buildRoutePattern($route) {
  * @return string
  * @throws \InvalidArgumentException
  */
-function createUrl($name, $params = [])
+function createUrl($name, array $params = [])
 {
     global $app;
 
@@ -96,4 +96,19 @@ function createUrl($name, $params = [])
     }
 
     return $path;
+}
+
+/**
+ * Redirects to route
+ *
+ * @param $name
+ * @param array $params
+ * @param int $status
+ */
+function redirect($name, array $params = [], $status = 302)
+{
+    $url = createUrl($name, $params);
+
+    header(sprintf('Location: %s', $url, $status));
+    exit;
 }

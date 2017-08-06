@@ -1,10 +1,11 @@
 <?php
 session_start();
 
-include '../app/app.php';
 include '../core/routing.php';
 include '../core/templating.php';
 include '../core/files.php';
+include '../core/security.php';
+include '../app/app.php';
 include '../exceptions/HttpNotFoundException.php';
 include '../exceptions/RuntimeException.php';
 

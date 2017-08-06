@@ -58,7 +58,7 @@ function index($page = 0) {
     $criteria = [
         'sort' => 'date',
         'length' => 2,
-        'offset'
+        'offset' => ceil($page * 2)
     ];
 
     return core\renderView(['default_layout.php', 'books/index.php'], [

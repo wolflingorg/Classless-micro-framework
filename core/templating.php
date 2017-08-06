@@ -3,11 +3,6 @@
 namespace app\core;
 
 /**
- * Global variable contains all view data
- */
-$view_data = [];
-
-/**
  * Includes all files
  *
  * @param $includes
@@ -16,7 +11,9 @@ $view_data = [];
  * @return null|string
  */
 function renderView(array $includes, array $data = []) {
-    global $app, $view_data;
+    static $view_data = [];
+
+    global $app;
 
     if (empty($app['kernel.view_dir'])) {
         throw new \InvalidArgumentException('Invalid kernel.view_dir');

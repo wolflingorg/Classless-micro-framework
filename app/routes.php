@@ -38,7 +38,7 @@ return [
         'methods' => ['POST']
     ],
     'security_logout' => [
-        'path' => '/login',
+        'path' => '/logout',
         'file' => 'security.php',
         'function' => 'app\\src\\security\\logout',
         'methods' => ['POST']
