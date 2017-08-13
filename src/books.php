@@ -12,7 +12,7 @@ use app\exceptions\HttpNotFoundException;
  */
 function index() {
     $criteria = [
-        'q' => isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '',
+        'q' => isset($_GET['q']) ? htmlspecialchars((string)$_GET['q']) : '',
         'sort' => 'date',
         'length' => 2,
         'offset' => isset($_GET['page']) ? ceil((int)$_GET['page'] * 2) : 0

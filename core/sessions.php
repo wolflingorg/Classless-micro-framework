@@ -35,6 +35,8 @@ function initUserData() {
 
 /**
  * Erases user data
+ *
+ * @param null $key
  */
 function clearUserDara($key = null) {
     if (!$key) {

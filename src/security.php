@@ -21,7 +21,7 @@ function login() {
         core\redirect('main_page');
     }
 
-    if (!password_verify($_POST['password'], $user['password'])) {
+    if (!password_verify((string)$_POST['password'], $user['password'])) {
         core\addFlash('danger', 'Username or password are incorrect');
         core\redirect('main_page');
     }
