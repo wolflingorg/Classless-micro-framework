@@ -21,6 +21,13 @@
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+            <form class="navbar-form navbar-left" action="<?= \app\core\createUrl('books') ?>">
+                <div class="form-group">
+                    <input placeholder="Search" name="q" value="<?= isset($criteria['q']) ? $criteria['q'] : '' ?>" required class="form-control">
+                </div>
+                <button class="btn btn-default">Search</button>
+            </form>
+
             <?php if (!$app['user']): ?>
                 <form class="navbar-form navbar-right" method="post" action="<?= \app\core\createUrl('security_login') ?>">
                     <div class="form-group">
@@ -44,10 +51,12 @@
 </nav>
 
 <div class="container">
-    <?php foreach (\app\core\getFlashes('error') as $message): ?>
-        <div class="alert alert-danger" role="alert">
-            <?= $message ?>
-        </div>
+    <?php foreach (['success', 'info', 'warning', 'danger'] as $flashType): ?>
+        <?php foreach (\app\core\getFlashes($flashType) as $message): ?>
+            <div class="alert alert-<?= $flashType ?>" role="alert">
+                <?= $message ?>
+            </div>
+        <?php endforeach; ?>
     <?php endforeach; ?>
 
     <?= $content ?>

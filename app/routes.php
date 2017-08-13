@@ -16,12 +16,6 @@ return [
         'function' => 'app\\src\\books\\index',
         'methods' => ['GET']
     ],
-    'books_pagination' => [
-        'path' => '/books-{page}',
-        'file' => 'books.php',
-        'function' => 'app\\src\\books\\index',
-        'methods' => ['GET']
-    ],
     'book_by_id' => [
         'path' => '/books/{id}',
         'requirements' => [

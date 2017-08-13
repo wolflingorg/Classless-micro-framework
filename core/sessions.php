@@ -21,7 +21,7 @@ function setUserData($key, $data) {
  * @return array|null
  */
 function getUserData($key) {
-    return isset($_SESSION['user_data'][$key]) ? $_SESSION['user_data'][$key] : null;
+    return isset($_SESSION['user_data'][$key]) ? $_SESSION['user_data'][$key] : [];
 }
 
 /**

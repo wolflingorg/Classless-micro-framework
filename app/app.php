@@ -1,4 +1,6 @@
 <?php
+namespace app\core;
+
 // Includes
 include '../core/sessions.php';
 include '../core/security.php';

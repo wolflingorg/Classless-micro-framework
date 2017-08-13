@@ -12,21 +12,23 @@ $app['users'] = [
 
 function login() {
     if (!isset($_POST['username']) || !isset($_POST['password'])) {
-        core\addFlash('error', 'Not enough parameters');
+        core\addFlash('danger', 'Not enough parameters');
         core\redirect('main_page');
     }
 
     if (!($user = loadUserByUsername($_POST['username']))) {
-        core\addFlash('error', 'Username or password are incorrect');
+        core\addFlash('danger', 'Username or password are incorrect');
         core\redirect('main_page');
     }
 
     if (!password_verify($_POST['password'], $user['password'])) {
-        core\addFlash('error', 'Username or password are incorrect');
+        core\addFlash('danger', 'Username or password are incorrect');
         core\redirect('main_page');
     }
 
     core\persistUser($user);
+
+    core\addFlash('success', sprintf('Hi %s !', $user['username']));
 
     core\redirect('main_page');
 }

@@ -17,7 +17,7 @@ function getCurrentRoute() {
         throw new \InvalidArgumentException('Can\'t find routes');
     }
 
-    $path = $_SERVER['PATH_INFO'] ?? '/';
+    $path = getCurrentUrl();
     $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
     foreach ($app['routes'] as $name => $route) {
@@ -42,6 +42,21 @@ function getCurrentRoute() {
 }
 
 /**
+ * Returns current URL
+ *
+ *@return string
+ */
+function getCurrentUrl() {
+    if (isset($_SERVER['PATH_INFO'])) {
+        return (string)$_SERVER['PATH_INFO'];
+    } elseif ($_SERVER['REQUEST_URI']) {
+        return str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+    }
+
+    return '/';
+}
+
+/**
  * Builds pattern for routing
  *
  * @param $route
@@ -55,7 +70,7 @@ function buildRoutePattern($route) {
     return preg_replace_callback(
         '/{([^}]+)}/',
         function ($matches) use ($routeRequirements) {
-            return isset($routeRequirements[$matches[1]]) ? '(' . $routeRequirements[$matches[1]] . ')' : '(.*?)';
+            return isset($routeRequirements[$matches[1]]) ? '(' . $routeRequirements[$matches[1]] . ')' : '([^/]*)';
         },
         $routePattern
     );
