@@ -1,13 +1,13 @@
-<?php foreach ($books as $id => $book): ?>
+<?php foreach ($books as $book): ?>
     <div class="media">
         <div class="media-left">
-            <a href="<?= \app\core\createUrl('book_by_id', ['id' => $id]) ?>">
+            <a href="<?= \app\core\createUrl('book_by_id', ['id' => $book['id']]) ?>">
                 <img src="<?= $book['poster'] ?>" alt="<?= $book['name'] ?>" class="media-object">
             </a>
         </div>
         <div class="media-body">
             <h4 class="media-heading">
-                <a href="<?= \app\core\createUrl('book_by_id', ['id' => $id]) ?>"><?= $book['name'] ?></a>
+                <a href="<?= \app\core\createUrl('book_by_id', ['id' => $book['id']]) ?>"><?= $book['name'] ?></a>
             </h4>
 
             <p><b>Author</b>: <?= $book['author'] ?></p>
@@ -25,7 +25,7 @@
                 </p>
             <?php endif; ?>
 
-            <a href="<?= \app\core\createUrl('book_by_id', ['id' => $id]) ?>" class="btn btn-primary">Details</a>
+            <a href="<?= \app\core\createUrl('book_by_id', ['id' => $book['id']]) ?>" class="btn btn-primary">Details</a>
         </div>
     </div>
 <?php endforeach; ?>

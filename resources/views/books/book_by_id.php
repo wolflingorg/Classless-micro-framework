@@ -7,11 +7,16 @@
 <div class="media">
     <div class="media-left">
         <img src="<?= $book['poster'] ?>" alt="<?= $book['name'] ?>" class="media-object">
+
+        <div class="text-center" style="margin-top: 25px">
+            <a href="<?= $book['link'] ?>" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-info-sign"></span> See more</a>
+        </div>
     </div>
+
     <div class="media-body">
-        <h4 class="media-heading">
+        <h2 class="media-heading">
             <?= $book['name'] ?>
-        </h4>
+        </h2>
 
         <p><b>Author</b>: <?= $book['author'] ?></p>
 
@@ -27,5 +32,7 @@
                 <?php endforeach; ?>
             </p>
         <?php endif; ?>
+
+        <?= $book['info'] ?>
     </div>
 </div>
