@@ -48,9 +48,9 @@ function getCurrentRoute() {
  */
 function getCurrentUrl() {
     if (isset($_SERVER['PATH_INFO'])) {
-        return (string)$_SERVER['PATH_INFO'];
-    } elseif ($_SERVER['REQUEST_URI']) {
-        return str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+        return parse_url((string)$_SERVER['PATH_INFO'], PHP_URL_PATH);
+    } elseif (isset($_SERVER['REQUEST_URI'])) {
+        return parse_url((string)$_SERVER['REQUEST_URI'], PHP_URL_PATH);
     }
 
     return '/';
