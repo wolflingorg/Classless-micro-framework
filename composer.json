@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "psr-4": {
+            "app\\tests\\": "./tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
